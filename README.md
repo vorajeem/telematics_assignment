@@ -2,13 +2,14 @@
 Telematics ingestion and reporting (C++/SQL/Cross-platform)
 
 ## Instructions to run 
--
--
--
+- Libraries used: https://github.com/simdjson/simdjson
 
+
+g++ -std=c++17 main.cpp -o telematics
+./telematics
 
 ## Technologies tested
-- C++ 17 or later
+- C++17
 - SQL (suggested SQLite)
 - Git
 - Azure DevOps YAML pipeline
