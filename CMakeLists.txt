@@ -8,6 +8,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(third-party/simdjson)
 
 
+find_package(SQLite3 REQUIRED)
+
 add_executable(telematics 
     src/main.cpp
     src/Vehicle.cpp
@@ -17,6 +19,7 @@ add_executable(telematics
 target_link_libraries(telematics
 	PRIVATE
 	simdjson::simdjson
+    SQLite::SQLite3
 )
 
 target_include_directories(telematics

@@ -31,3 +31,17 @@ g++ -std=c++17 main.cpp -o telematics
 # Deliverables
 - Git 
 - Video
+
+
+
+# Codex prompts
+
+```add getters for all fields in the TelemetryEvent object. I need those fields available so that the objects can be persisted into the SQLite3 telemetry_events table```
+
+---------------
+
+```continue adding the sqlite3_bind_text(insert_statement, X, event_parsed.getX().c_str(), -1, SQLITE_TRANSIENT); 
+
+for all the other fields which I need to add in the telemetry_events table. Be careful not to break the implementation. Make sure that there no type conflicts```
+
+-------------
