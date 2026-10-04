@@ -5,12 +5,19 @@ project(telematics_assignment LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+add_subdirectory(third-party/simdjson)
+
+
 add_executable(telematics 
     src/main.cpp
     src/Vehicle.cpp
     src/TelemetryEvent.cpp
 )
 
+target_link_libraries(telematics
+	PRIVATE
+	simdjson::simdjson
+)
 
 target_include_directories(telematics
     PRIVATE 
