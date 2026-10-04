@@ -8,6 +8,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_executable(telematics 
     src/main.cpp
     src/Vehicle.cpp
+    src/TelemetryEvent.cpp
 )
 
 

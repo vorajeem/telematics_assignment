@@ -5,19 +5,12 @@ using namespace std;
 #include <string>
 
 class Vehicle {
-    public: 
-        Vehicle(const string& device_id, const string& event_id, float timestamp, float latitude, float longitude, float speed, float heading_degrees);
+    public:    
+        Vehicle(const std::string& device_id);
+        // Vehicle(const std::string& device_id, const std::string& event_id, int64_t timestamp, double latitude, double longitude, double speed, double heading_degrees);
         void printInfo() const;
-
     private:
     string device_id;
-    string event_id;
-    float latitude;
-    float longitude;
-    float speed;
-    float heading_degrees;
-    float timestamp;
-
 };
 
 
