@@ -10,6 +10,8 @@ i.e.
 ./telematics ../data/input_data.json
 
 
+Testing (Manually)
+`./telematics ../data/duplicate_out-of-order_data.json`
 
 ## Technologies tested
 - C++17
