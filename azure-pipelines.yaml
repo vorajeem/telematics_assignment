@@ -1,0 +1,19 @@
+
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-22.04'
+
+steps:
+  - checkout: self
+
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y build-essential cmake libsqlite3-dev
+    displayName: 'Install build dependencies'
+
+  - script: |
+      cmake -S . -B build
+      cmake --build build --parallel
+    displayName: 'Configure and build C++ project'
