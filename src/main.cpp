@@ -200,6 +200,7 @@ int main(int argc, char* argv[]) {
         std::cerr << "Could not insert telemetry event: " << sqlite3_errmsg(database) << std::endl;
       }
 
+      sqlite3_reset(insert_statement);
       
     }
     catch (const simdjson::simdjson_error& error) {
@@ -207,13 +208,78 @@ int main(int argc, char* argv[]) {
     }
 
     for (const TelemetryEvent& event: events) {
-      event.printInfo();
+      // event.printInfo();
     }
   }
+
+    // mandatory - latest known location
+   const char* latest_location_sql = R"(
+     SELECT device_id, latitude, longitude, timestamp
+    FROM (
+        SELECT
+            device_id,
+            latitude,
+            longitude,
+            timestamp,
+            ROW_NUMBER() OVER (
+                PARTITION BY device_id
+                ORDER BY timestamp DESC, event_id DESC
+            ) AS row_number
+        FROM telemetry_events
+    )
+    WHERE row_number = 1;
+   )";
+
+   sqlite3_stmt* latest_location_statement = nullptr;
+
+   result = sqlite3_prepare_v2(
+    database,
+    latest_location_sql,
+    -1,
+    &latest_location_statement,
+    nullptr
+   );
+
+   if (result != SQLITE_OK) {
+    std::cerr << "Could not prepare latest-location query: " << sqlite3_errmsg(database) << std::endl;
+    sqlite3_finalize(insert_statement);
+    sqlite3_close(database);
+    return 1;
+   }
+
+   //execute statement and display Load
+
+   std::cout << "\nLatest location for each device:\n";
+
+   while ( sqlite3_step(latest_location_statement) == SQLITE_ROW) {
+    const unsigned char* device_id =
+    sqlite3_column_text(latest_location_statement,0);
+
+    double latitude = 
+    sqlite3_column_double(latest_location_statement, 1);
+
+    double longitude =
+    sqlite3_column_double(latest_location_statement, 2);
+
+    std::int64_t timestamp = 
+    sqlite3_column_int64(latest_location_statement, 3);
+
+
+    std::cout << "Device: " << device_id
+        << ", Latitude: " << latitude
+        << ", Longitude: " << longitude
+        << ", Timestamp: " << timestamp
+        << '\n';
+
+        // corresponding to the SELECT statement
+        //
+
+   }
 
 
     // release the prepared statement 
     sqlite3_finalize(insert_statement);
+    sqlite3_finalize(latest_location_statement);
     // close database safely
     sqlite3_close(database);
     return 0;
