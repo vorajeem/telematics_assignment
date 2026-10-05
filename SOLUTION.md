@@ -78,6 +78,13 @@ FROM telemetry_events
 ORDER BY timestamp DESC;
 
 ```
+### Tests
+
+See tests/ directory and tests/DatabaseTest.cpp
+Tests covers duplicates and out-of-order event logs.
+Run the executable ./database_test in tests/ to conduct tests. No output means test performed successfully.
+
+
 ### AI Chat prompts used in the development of this application:
 
 1. 
