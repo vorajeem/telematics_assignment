@@ -27,3 +27,19 @@ target_include_directories(telematics
     include
 )
 
+enable_testing()
+
+add_executable(database_test
+    tests/DatabaseTest.cpp
+)
+
+target_link_libraries( database_test
+PRIVATE
+SQLite::SQLite3 
+)
+
+add_test(
+    NAME DatabaseTest
+    COMMAND database_test
+)
+

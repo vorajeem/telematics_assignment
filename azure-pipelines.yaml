@@ -17,3 +17,8 @@ steps:
       cmake -S . -B build
       cmake --build build --parallel
     displayName: 'Configure and build C++ project'
+
+  - script: |
+      cd build
+      ctest --output-on-failure
+    displayName: 'Run automated tests'
